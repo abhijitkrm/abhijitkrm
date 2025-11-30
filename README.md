@@ -14,3 +14,10 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+Full Stack and Blockchain Engineer with 8+ years of experience building scalable systems, secure smart contracts, and high-performance applications. Strong background in DeFi architectures, distributed systems, backend engineering, and end-to-end product development.
+
+Specialized in EVM/Solidity, Node.js, TypeScript, React, Python, Go, PostgreSQL, MongoDB, Redis, and cloud infrastructure.
+Experienced in designing perpetual DEXs, staking systems, cross-chain automation, backend engines, admin dashboards, and real-time data pipelines.
+
+I value ownership, clean architecture, and building products that solve real problems. Always learning, always improving, and always shipping.
