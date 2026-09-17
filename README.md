@@ -15,10 +15,10 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-Full Stack and Blockchain Engineer with 8+ years of experience building scalable systems, secure smart contracts, and high-performance applications. Strong background in DeFi architectures, distributed systems, backend engineering, and end-to-end product development.
+Full Stack and Blockchain Engineer with 8+ years of experience building scalable systems, secure smart contracts, and high-performance applications. Strong background in  architectures, distributed systems, backend engineering, and end-to-end product development.
 
-Specialized in EVM/Solidity, Node.js, TypeScript, React, Python, Go, PostgreSQL, MongoDB, Redis, and cloud infrastructure.
+Specialized in EVM/Solidity, Node.js, TypeScript, React, Python, Go, PostgreSQL, MongoDB, Redis, and cloud infrastructure. 
 
-Experienced in designing perpetual DEXs, staking systems, cross-chain automation, backend engines, admin dashboards, and real-time data pipelines.
+Experienced in designing trading systems, staking mechanisms, cross-chain automation, backend engines, admin dashboards, and real-time data pipelines.
 
 Competitive builder who pushes through challenges and never quits. I value integrity, discipline, and reliability in everything I do. I work best in remote, collaborative environments and am driven by the long-term goal of building technology that creates meaningful impact.
