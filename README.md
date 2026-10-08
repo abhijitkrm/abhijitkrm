@@ -1,24 +1,38 @@
-## Full-stack and Blockchain Engineer 👋
+# Hi, I am Abhijit
 
-<!--
-**abhijitkrm/abhijitkrm** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+**Full Stack & Blockchain Engineer**
 
-Here are some ideas to get you started:
+[hi@abhijitkrm.com](mailto:abhijitkrm@gmail.com) · [github.com/abhijitkrm](https://github.com/abhijitkrm) · Remote/Bengaluru
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
 
-Full Stack and Blockchain Engineer with 8+ years of experience building scalable systems, secure smart contracts, and high-performance applications. Strong background in  architectures, distributed systems, backend engineering, and end-to-end product development.
+8+ years building scalable systems, secure smart contracts, and high-performance applications across blockchain and trading systems. A disciplined, competitive builder; focused on reliability, clarity, and technology with real-world impact.
 
-Specialized in EVM/Solidity, Node.js, TypeScript, React, Python, Go, PostgreSQL, MongoDB, Redis, and cloud infrastructure. 
+## Upcoming
 
-Experienced in designing trading systems, staking mechanisms, cross-chain automation, backend engines, admin dashboards, and real-time data pipelines.
+**monadbft** `Consensus · Go`
+MonadBFT consensus ported from Rust to Go for Cosmos-EVM.
 
-Competitive builder who pushes through challenges and never quits. I value integrity, discipline, and reliability in everything I do. I work best in remote, collaborative environments and am driven by the long-term goal of building technology that creates meaningful impact.
+**oxide** `L1 stack · Rust`
+An ultra-low-latency, high-throughput L1 stack built on Rust from ground up using first principles aiming for HFT.
+
+## Built
+
+**[sona](https://github.com/abhijitkrm/sona)** `Design system · HTML/CSS`
+Token-enforced design system for landing pages and printable documents: canonical register, self-contained templates, drift-guard checker.
+
+**[cometcli](https://github.com/abhijitkrm/cometcli)** `CLI · Go`
+An agentic SRE terminal for Cosmos-EVM validators.
+
+**[cometduty](https://github.com/abhijitkrm/cometduty)** `Daemon · Go`
+Monitoring and alerting daemon for Cosmos-EVM validators: missed-block detection, jail/tombstone watch, EVM execution checks, Prometheus metrics and alerts.
+
+**[faster](https://github.com/abhijitkrm/faster)** `Explorer · Go/TS`
+A high-performance, real-time EVM block explorer.
+
+**shrt** `Service · Multi`
+High-performance URL shortener: custom AOF storage engine, 256-shard index, SO_REUSEPORT multi-worker with ~150K RPS.
+[Go](https://github.com/abhijitkrm/shrt-go) · [Rust](https://github.com/abhijitkrm/shrt-rust) · [C++20](https://github.com/abhijitkrm/shrt-cpp) · [Java 20](https://github.com/abhijitkrm/shrt-java) · [TypeScript](https://github.com/abhijitkrm/shrt-ts)
+
+**[findcmd](https://github.com/abhijitkrm/findcmd)** `CLI · Shell`
+CLI tool for fast command-history search: interactive mode, multi-term search, clipboard support.
