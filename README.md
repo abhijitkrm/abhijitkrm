@@ -34,5 +34,9 @@ A high-performance, real-time EVM block explorer.
 High-performance URL shortener: custom AOF storage engine, 256-shard index, SO_REUSEPORT multi-worker with ~150K RPS.
 [Go](https://github.com/abhijitkrm/shrt-go) · [Rust](https://github.com/abhijitkrm/shrt-rust) · [C++20](https://github.com/abhijitkrm/shrt-cpp) · [Java 20](https://github.com/abhijitkrm/shrt-java) · [TypeScript](https://github.com/abhijitkrm/shrt-ts)
 
+**[matcher](https://github.com/abhijitkrm/matcher)** `Engine · Multi`
+Deterministic, zero-allocation FIFO order-matching engine: same core, five languages, benchmarked per implementation.
+[C++20 (~23M TPS)](https://github.com/abhijitkrm/matcher-cpp) · [Rust (~19M TPS)](https://github.com/abhijitkrm/matcher-rust) · [Java (~11M TPS)](https://github.com/abhijitkrm/matcher-java) · [Go (~9M TPS)](https://github.com/abhijitkrm/matcher-go) · [TypeScript (~5M TPS)](https://github.com/abhijitkrm/matcher-ts)
+
 **[findcmd](https://github.com/abhijitkrm/findcmd)** `CLI · Shell`
 CLI tool for fast command-history search: interactive mode, multi-term search, clipboard support.
