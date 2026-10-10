@@ -13,7 +13,7 @@
 **[monadbft](https://github.com/abhijitkrm/monadbft-go)** `Consensus · Go`
 Go port of MonadBFT, pipelined two-phase BFT consensus for Cosmos-EVM: consensus core, deterministic swarm, WAL persistence, ABCI bridge running 4-node evmd testnets.
 
-**oxide** `L1 stack · Rust`
+**oxide(https://github.com/abhijitkrm/oxide)** `L1 stack · Rust`
 An ultra-low-latency, high-throughput L1 stack built on Rust from ground up using first principles aiming for HFT.
 
 ## Built
