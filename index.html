@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Abhijit — Full Stack & Blockchain Engineer.">
+<title>Abhijit · Full Stack & Blockchain Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:           #000000;
+  --eggshell:       #f1f4f4;
+  --eggshell-dark:  #cfdadc;
+  --paper:          #ffffff;
+  --edge-light:     #e1e1e1;
+  --gray-medium:    #bbbbbb;
+  --gray-mid:       #808080;
+  --gray-dark:      #666666;
+  --surface-3:      #212121;
+  --mint:           #22e2a8;
+  --cyan:           #40b3ff;
+  --nebula-navy:    #1a2340;
+  --sans: "Space Grotesk", "The Future", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", "The Future Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-med: 300ms;
+
+  /* Theme colors (light mode defaults) */
+  --bg: var(--eggshell);
+  --text: var(--void);
+  --text-muted: var(--surface-3);
+  --text-dim: var(--gray-dark);
+  --border: var(--eggshell-dark);
+  --border-light: var(--edge-light);
+  --accent: var(--nebula-navy);
+  --star-color: var(--nebula-navy);
+}
+
+[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --text: #e8e8e8;
+  --text-muted: #b0b0b0;
+  --text-dim: #888888;
+  --border: #2a2a2a;
+  --border-light: #1a1a1a;
+  --accent: var(--mint);
+  --star-color: var(--mint);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ---------- Starfield background ---------- */
+body {
+  font-family: var(--sans);
+  font-size: 14px; line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+  transition: background var(--dur-med) var(--ease-in-out), color var(--dur-med) var(--ease-in-out);
+}
+
+.stars {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--star-color);
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: background var(--dur-med) var(--ease-in-out);
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.2; transform: scale(0.8); }
+}
+
+.star:nth-child(1) { top: 8%; left: 12%; width: 5px; height: 5px; animation-delay: 0s; }
+.star:nth-child(2) { top: 15%; left: 85%; width: 3px; height: 3px; animation-delay: 0.4s; }
+.star:nth-child(3) { top: 25%; left: 45%; animation-delay: 0.8s; }
+.star:nth-child(4) { top: 35%; left: 72%; width: 3px; height: 3px; animation-delay: 1.2s; }
+.star:nth-child(5) { top: 42%; left: 28%; width: 5px; height: 5px; animation-delay: 0.2s; }
+.star:nth-child(6) { top: 55%; left: 90%; animation-delay: 1.6s; }
+.star:nth-child(7) { top: 62%; left: 8%; width: 3px; height: 3px; animation-delay: 2s; }
+.star:nth-child(8) { top: 70%; left: 55%; width: 5px; height: 5px; animation-delay: 0.6s; }
+.star:nth-child(9) { top: 78%; left: 35%; width: 3px; height: 3px; animation-delay: 1.4s; }
+.star:nth-child(10) { top: 85%; left: 78%; animation-delay: 1.8s; }
+.star:nth-child(11) { top: 92%; left: 15%; width: 3px; height: 3px; animation-delay: 2.2s; }
+.star:nth-child(12) { top: 5%; left: 60%; animation-delay: 1s; }
+.star:nth-child(13) { top: 48%; left: 5%; width: 5px; height: 5px; animation-delay: 2.4s; }
+.star:nth-child(14) { top: 30%; left: 95%; width: 3px; height: 3px; animation-delay: 0.3s; }
+.star:nth-child(15) { top: 88%; left: 48%; animation-delay: 1.7s; }
+
+/* Vary animation durations for more organic feel */
+.star:nth-child(odd) { animation-duration: 2.5s; }
+.star:nth-child(3n) { animation-duration: 4s; }
+.star:nth-child(5n) { animation-duration: 3.5s; }
+
+.sheet {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 64px 28px 72px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Header ---------- */
+.header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.hi { font-family: var(--mono); font-size: 12px; color: var(--text-dim); margin-bottom: 10px; }
+.name { font-size: 40px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.05; }
+.role {
+  margin-top: 8px; font-size: 16px; color: var(--accent); font-weight: 500;
+}
+.contact {
+  display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px;
+  font-family: var(--mono); font-size: 12px; color: var(--text-dim);
+}
+.contact a {
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color var(--dur-med) var(--ease-in-out), color var(--dur-med) var(--ease-in-out);
+}
+.contact a:hover { border-bottom-color: var(--accent); }
+.head-rule { border: none; border-top: 1px solid var(--border); margin: 26px 0 0; }
+
+/* ---------- Theme Toggle ---------- */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.toggle-switch {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background: var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background var(--dur-med) var(--ease-in-out);
+}
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--text);
+  border-radius: 50%;
+  transition: transform var(--dur-med) var(--ease-in-out), background var(--dur-med) var(--ease-in-out);
+}
+[data-theme="dark"] .toggle-switch {
+  background: var(--accent);
+}
+[data-theme="dark"] .toggle-switch::after {
+  transform: translateX(20px);
+  background: var(--bg);
+}
+
+/* ---------- Summary ---------- */
+.about { font-size: 15px; line-height: 1.65; color: var(--text-muted); max-width: 640px; margin-top: 22px; }
+
+/* ---------- Sections ---------- */
+section { margin-top: 38px; }
+h2 {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dim);
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+
+/* ---------- Entries with beam effect ---------- */
+.job {
+  padding: 18px 0 6px;
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+}
+.job:last-child { border-bottom: none; }
+
+/* Beam effect */
+.job::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(34, 226, 168, 0.15) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.job:hover::before {
+  animation: beam 0.6s ease-out forwards;
+}
+@keyframes beam {
+  from { left: -100%; }
+  to { left: 100%; }
+}
+
+.job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.who { font-size: 15px; font-weight: 500; }
+.who .title { font-weight: 400; color: var(--text-muted); }
+.when { font-family: var(--mono); font-size: 11px; color: var(--text-dim); white-space: nowrap; }
+.ver { font-family: var(--mono); font-size: 10px; color: var(--mint); margin-left: 6px; }
+.proj-link {
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color var(--dur-med) var(--ease-in-out), color var(--dur-med) var(--ease-in-out);
+}
+.proj-link:hover { border-bottom-color: var(--accent); }
+.pdesc { font-size: 13.5px; line-height: 1.55; color: var(--text-muted); margin-top: 4px; max-width: 620px; }
+.langs { margin-top: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.3px; color: var(--text-dim); }
+
+/* ---------- Footer ---------- */
+.foot {
+  margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--border-light);
+  display: flex; justify-content: space-between;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--text-dim);
+}
+
+/* ---------- Print ---------- */
+@page { size: A4; margin: 14mm 16mm; }
+@media print {
+  body { background: var(--paper); font-size: 10pt; color: var(--void); }
+  .stars, .theme-toggle { display: none; }
+  .sheet { padding: 0; max-width: none; }
+  .job { break-inside: avoid; }
+  .job::before { display: none; }
+}
+@media screen and (max-width: 560px) {
+  .sheet { padding: 40px 20px 48px; }
+  .name { font-size: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .job::before { display: none; }
+  .star { animation: none; opacity: 0.4; }
+}
+</style>
+</head>
+<body>
+
+<!-- Starfield -->
+<div class="stars">
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+  <div class="star"></div>
+</div>
+
+<div class="sheet">
+
+  <header>
+    <div class="header-row">
+      <div>
+        <p class="hi">Hi, I am</p>
+        <h1 class="name">Abhijit</h1>
+      </div>
+      <div class="theme-toggle">
+        <span>Dark</span>
+        <div class="toggle-switch" onclick="toggleTheme()" role="button" aria-label="Toggle dark mode"></div>
+      </div>
+    </div>
+    <div class="role">Full Stack &amp; Blockchain Engineer</div>
+    <div class="contact">
+      <a href="mailto:hi@abhijitkrm.com">hi@abhijitkrm.com</a>
+      <a href="https://github.com/abhijitkrm">github.com/abhijitkrm</a>
+      <span>Remote/Bengaluru</span>
+    </div>
+  </header>
+  <hr class="head-rule">
+
+  <p class="about">8+ years building scalable systems, secure smart
+  contracts, and high-performance applications across blockchain and
+  trading systems. A disciplined, competitive builder; focused on reliability, clarity,
+  and technology with real-world impact.</p>
+
+  <section>
+    <h2>Upcoming</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/monadbft-go">monadbft</a></div>
+        <div class="when">Consensus · Go</div>
+      </div>
+      <p class="pdesc">monadbft implementation in go for cosmos-evm chains</p>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/oxide">oxide</a></div>
+        <div class="when">L1 stack · Rust</div>
+      </div>
+      <p class="pdesc">an ultra-low latency high-throughput blockchain designed for HFT</p>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/orderer">orderer</a></div>
+        <div class="when">Pipeline · Multi</div>
+      </div>
+      <p class="pdesc">LMAX-disruptor multi-core order-matching pipeline with journaling, checkpoints and crash recovery.</p>
+      <div class="langs">
+        <a class="proj-link" href="https://github.com/abhijitkrm/orderer-cpp">C++20 (~32M/s)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/orderer-rust">Rust (~32M/s)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/orderer-java">Java (~20M/s)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/orderer-go">Go (~13M/s)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/orderer-ts">TypeScript (~7.5M/s)</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Built</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/sona">sona</a></div>
+        <div class="when">Design system · HTML/CSS</div>
+      </div>
+      <p class="pdesc">Token-enforced design system for landing pages and printable documents: canonical register, self-contained templates, drift-guard checker. This page is built with it.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/cometcli">cometcli</a><span class="ver">v0.5.0</span></div>
+        <div class="when">CLI · Go</div>
+      </div>
+      <p class="pdesc">An agentic SRE terminal for Cosmos-EVM validators.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/cometduty">cometduty</a><span class="ver">v0.2.0</span></div>
+        <div class="when">Daemon · Go</div>
+      </div>
+      <p class="pdesc">Monitoring and alerting daemon for Cosmos-EVM validators: missed-block detection, jail/tombstone watch, EVM execution checks, Prometheus metrics and alerts.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/faster">faster</a></div>
+        <div class="when">Explorer · Go/TS</div>
+      </div>
+      <p class="pdesc">A high-performance, real-time EVM block explorer.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who">shrt</div>
+        <div class="when">Service · Multi</div>
+      </div>
+      <p class="pdesc">High-performance URL shortener: custom AOF storage engine, 256-shard index, SO_REUSEPORT multi-worker with ~150K RPS.</p>
+      <div class="langs">
+        <a class="proj-link" href="https://github.com/abhijitkrm/shrt-go">Go</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/shrt-rust">Rust</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/shrt-cpp">C++20</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/shrt-java">Java 20</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/shrt-ts">TypeScript</a>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/matcher">matcher</a></div>
+        <div class="when">Engine · Multi</div>
+      </div>
+      <p class="pdesc">Deterministic, zero-allocation FIFO order-matching engine: same core, five languages, benchmarked per implementation.</p>
+      <div class="langs">
+        <a class="proj-link" href="https://github.com/abhijitkrm/matcher-cpp">C++20 (~23M TPS)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/matcher-rust">Rust (~19M TPS)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/matcher-java">Java (~11M TPS)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/matcher-go">Go (~9M TPS)</a> ·
+        <a class="proj-link" href="https://github.com/abhijitkrm/matcher-ts">TypeScript (~5M TPS)</a>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="who"><a class="proj-link" href="https://github.com/abhijitkrm/findcmd">findcmd</a><span class="ver">v1.0.1</span></div>
+        <div class="when">CLI · Shell</div>
+      </div>
+      <p class="pdesc">CLI tool for fast command-history search: interactive mode, multi-term search, clipboard support.</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>abhijitkrm.com</span>
+    <span>Built with sona</span>
+  </div>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+}
+
+// Initialize theme from localStorage or system preference
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
+</body>
+</html>
