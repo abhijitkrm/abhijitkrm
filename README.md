@@ -8,7 +8,7 @@
 
 8+ years building scalable systems, secure smart contracts, and high-performance applications across blockchain and trading systems. A disciplined, competitive builder; focused on reliability, clarity, and technology with real-world impact.
 
-## Upcoming
+## Ongoing
 
 **[monadbft](https://github.com/abhijitkrm/monadbft-go)** `Consensus · Go`
 Go port of MonadBFT, pipelined two-phase BFT consensus for Cosmos-EVM: consensus core, deterministic swarm, WAL persistence, ABCI bridge running 4-node evmd testnets.
