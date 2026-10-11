@@ -2,21 +2,19 @@
 
 **Full Stack & Blockchain Engineer**
 
-[hi@abhijitkrm.com](mailto:abhijitkrm@gmail.com) · [github.com/abhijitkrm](https://github.com/abhijitkrm) · Remote/Bengaluru
+[abhijitkrm.com](https://abhijitkrm.com) · [hi@abhijitkrm.com](mailto:abhijitkrm@gmail.com) · [github.com/abhijitkrm](https://github.com/abhijitkrm) · Remote/Bengaluru
 
 ---
 
 8+ years building scalable systems, secure smart contracts, and high-performance applications across blockchain and trading systems. A disciplined, competitive builder; focused on reliability, clarity, and technology with real-world impact.
 
-## Ongoing
+## Projects
 
-**[monadbft](https://github.com/abhijitkrm/monadbft-go)** `Consensus · Go`
+**[monadbft-go](https://github.com/abhijitkrm/monadbft-go)** `Consensus · Go` `In Progress`
 Go port of MonadBFT, pipelined two-phase BFT consensus for Cosmos-EVM: consensus core, deterministic swarm, WAL persistence, ABCI bridge running 4-node evmd testnets.
 
-**[oxide](https://github.com/abhijitkrm/oxide)** `L1 stack · Rust`
+**[oxide](https://github.com/abhijitkrm/oxide)** `L1 stack · Rust` `In Progress`
 An ultra-low-latency, high-throughput L1 stack built on Rust from ground up using first principles aiming for HFT.
-
-## Built
 
 **[sona](https://github.com/abhijitkrm/sona)** `Design system · HTML/CSS`
 Token-enforced design system for landing pages and printable documents: canonical register, self-contained templates, drift-guard checker.
@@ -40,3 +38,7 @@ Deterministic, zero-allocation FIFO order-matching engine: same core, five langu
 
 **[findcmd](https://github.com/abhijitkrm/findcmd)** `CLI · Shell`
 CLI tool for fast command-history search: interactive mode, multi-term search, clipboard support.
+
+**[orderer](https://github.com/abhijitkrm/orderer)** `Order System · Multi`
+High-performance order management system with lock-free concurrency, SIMD-accelerated matching, and sub-microsecond latency.
+[Go](https://github.com/abhijitkrm/orderer-go) · [C++](https://github.com/abhijitkrm/orderer-cpp)
