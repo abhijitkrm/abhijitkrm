@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>evm-hft - Abhijit</title>
+<meta name="description" content="Cosmos-EVM port optimized for HFT trading with custom HotStuff consensus and native CLOB module.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:           #000000;
+  --ink:            #ffffff;
+  --ink-80:         #ffffffcc;
+  --ink-60:         #ffffff99;
+  --ink-50:         #ffffff80;
+  --ink-40:         #ffffff66;
+  --fill-10:        #ffffff1a;
+  --fill-5:         #ffffff0d;
+  --stroke-20:      #ffffff33;
+  --stroke-13:      #ffffff21;
+  --surface-1:      #181818;
+  --surface-2:      #1e1f20;
+  --mint:           #22e2a8;
+  --cyan:           #40b3ff;
+  --nebula-pink:    #f2a7b8;
+  --nebula-peach:   #f6d6c2;
+  --radius-sm:      10px;
+  --radius-pill:    999px;
+  --sans: "Space Grotesk", "The Future", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", "The Future Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --dur-med: 300ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--void);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--ink); }
+
+.page { max-width: 1440px; margin: 0 auto; padding: 0 100px; }
+
+/* ---------- Hero (Full Width) ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 100px calc(50vw - 50%) 80px;
+  margin-inline: calc(50% - 50vw);
+}
+.starfield {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(#ffffffcc 1.2px, transparent 1.6px),
+    radial-gradient(#ffffff66 1px, transparent 1.4px);
+  background-size: 120px 120px, 40px 40px;
+  background-position: 0 0, 0 0;
+  opacity: 0.7;
+  mask-image: linear-gradient(to bottom, black 40%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 92%);
+}
+.hero-inner {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 100px;
+}
+
+/* ---------- Nav ---------- */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-50);
+  margin-bottom: 32px;
+}
+.nav-inner a {
+  color: var(--ink-50);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.nav-inner a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+.nav-sep { color: var(--ink-40); }
+
+/* ---------- Header ---------- */
+.product-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+.hero h1 {
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-top: 12px;
+}
+.subtitle {
+  font-size: 20px;
+  color: var(--ink-60);
+  margin-top: 16px;
+  max-width: 700px;
+  line-height: 1.5;
+}
+.header-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-50);
+}
+.header-meta a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.header-meta a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+.status-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--void);
+  background: var(--mint);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+.status-tag--private {
+  background: var(--nebula-pink);
+}
+
+/* ---------- Stats Strip ---------- */
+.stats {
+  display: flex;
+  gap: 56px;
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--stroke-13);
+}
+.stat-value {
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-top: 4px;
+}
+
+/* ---------- Sections ---------- */
+section { padding: 64px 0 0; }
+.section-head {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--stroke-13);
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.section-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-50);
+  margin-left: 12px;
+}
+.section-body {
+  margin-top: 0;
+}
+.section-body p {
+  font-size: 16px;
+  color: var(--ink-80);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.section-body p:last-child { margin-bottom: 0; }
+
+/* ---------- Category ---------- */
+.category {
+  margin-top: 24px;
+}
+.category:first-child { margin-top: 0; }
+.category-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-bottom: 12px;
+}
+.category-label--mint { color: var(--mint); }
+.category-label--cyan { color: var(--cyan); }
+.category-label--pink { color: var(--nebula-pink); }
+.category-label--peach { color: var(--nebula-peach); }
+
+/* ---------- List ---------- */
+.list {
+  list-style: none;
+}
+.list li {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-80);
+  padding: 8px 0 8px 24px;
+  position: relative;
+}
+.list li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  font-family: var(--mono);
+  color: var(--mint);
+  font-weight: 500;
+}
+.list--pending li::before {
+  content: "○";
+  color: var(--ink-50);
+}
+.list--planned li::before {
+  content: "→";
+  color: var(--cyan);
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--fill-10);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--cyan);
+}
+
+/* ---------- Benchmark Entry ---------- */
+.bench-list {
+  margin-top: 0;
+}
+.bench-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--stroke-13);
+  font-size: 15px;
+}
+.bench-entry:last-child { border-bottom: none; }
+.bench-label { color: var(--ink-80); }
+.bench-value {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--mint);
+}
+.bench-note {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-40);
+  margin-left: 12px;
+}
+
+/* ---------- Code Block ---------- */
+.code-block {
+  background: var(--surface-2);
+  border: 1px solid var(--stroke-13);
+  border-radius: var(--radius-sm);
+  padding: 24px 28px;
+  margin-top: 0;
+  overflow-x: auto;
+}
+.code-block pre {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-80);
+  margin: 0;
+}
+.code-block .c { color: var(--ink-40); }
+.code-block .k { color: var(--cyan); }
+
+/* ---------- Footer ---------- */
+.foot {
+  margin-top: 80px;
+  padding: 28px 0;
+  border-top: 1px solid var(--stroke-13);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-40);
+}
+.foot a {
+  color: var(--ink-50);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.foot a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .page { padding: 0 40px; }
+  .hero-inner { padding: 0 40px; }
+  .hero { padding: 80px calc(50vw - 50%) 60px; }
+  .hero h1 { font-size: 42px; }
+  .stats { flex-wrap: wrap; gap: 40px; }
+}
+@media (max-width: 600px) {
+  .page { padding: 0 24px; }
+  .hero-inner { padding: 0 24px; }
+  .hero h1 { font-size: 32px; }
+  .subtitle { font-size: 16px; }
+  .header-meta { flex-direction: column; gap: 12px; }
+  .stats { gap: 24px; }
+  .stat-value { font-size: 24px; }
+  .bench-entry { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="starfield"></div>
+  <div class="hero-inner">
+    <div class="nav-inner">
+      <a href="/">abhijit</a>
+      <span class="nav-sep">/</span>
+      <span>evm-hft</span>
+    </div>
+    <span class="product-name">Cosmos-EVM · Go</span>
+    <h1>evm-hft</h1>
+    <p class="subtitle">Cosmos-EVM port optimized for HFT trading. Custom HotStuff consensus engine with ~200ms block time, native CLOB module with parallel matching, trading mempool with P2P gossip, and EVM precompiles for order execution.</p>
+    <div class="header-meta">
+      <span class="status-tag">In Progress</span>
+      <span class="status-tag status-tag--private">Private</span>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">103.6K</div>
+        <div class="stat-label">Peak TPS</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">~200ms</div>
+        <div class="stat-label">Block Time</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">80x</div>
+        <div class="stat-label">vs Baseline</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">~21µs</div>
+        <div class="stat-label">Per Order</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <h2 class="section-title">Features</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li>Pipelined 3-chain HotStuff consensus replacing CometBFT</li>
+        <li>Native x/clob module with FIFO matching engine</li>
+        <li>CLOB precompile for Solidity order execution</li>
+        <li>Trading mempool with parallel P2P gossip</li>
+        <li>Parallel per-pair matching with lane isolation</li>
+        <li>Gasless price-feed precompile via vote extensions</li>
+        <li>Reentrancy guards for deposit/withdraw</li>
+        <li>WAL persistence with crash recovery</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <h2 class="section-title">Architecture</h2>
+    </div>
+    <div class="section-body">
+      <div class="category">
+        <div class="category-label category-label--mint">Consensus</div>
+        <ul class="list">
+          <li>3-chain pipelined HotStuff (Aptos/Diem lineage)</li>
+          <li>Leader-centric O(n) gossip vs Tendermint's O(n²)</li>
+          <li>ABCI++ interface mapping (PrepareProposal, ProcessProposal, ExtendVote)</li>
+          <li>Pacemaker with exponential backoff (capped at 8x)</li>
+          <li>Vote keeper with quorum tracking (strict >2/3)</li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-label category-label--cyan">CLOB Module</div>
+        <ul class="list">
+          <li>In-memory B-tree order book with price-time priority</li>
+          <li>Parallel lane execution with journal-based merge</li>
+          <li>Settlement accumulator for atomic balance updates</li>
+          <li>Tick-size validation with configurable precision</li>
+          <li>Market maker bond system</li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-label category-label--peach">Trading Mempool</div>
+        <ul class="list">
+          <li>Batch state machine with verified order tracking</li>
+          <li>Ed25519 signature cache with eviction budget</li>
+          <li>Rate limiting per trader/pair</li>
+          <li>P2P gossip via trading reactor</li>
+          <li>Preconf support for sub-block latency</li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-label category-label--pink">EVM Integration</div>
+        <ul class="list">
+          <li>CLOB precompile: PlaceLimitOrder, PlaceMarketOrder, CancelOrder</li>
+          <li>Deposit/Withdraw with reentrancy protection</li>
+          <li>Query methods: GetOrderBook, GetOrder, GetUserOrders</li>
+          <li>Price precompile at <code>0x0...0888</code> (vote extension primary)</li>
+          <li>Gasless price writes via ante fee-waiver</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <h2 class="section-title">Dependencies<span class="section-meta">Core libraries</span></h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li><code>Go 1.25</code> — runtime with CGO enabled</li>
+        <li><code>Cosmos SDK</code> — store/v2 with ABCI++</li>
+        <li><code>go-ethereum</code> — EVM + ABI encoding</li>
+        <li><code>RocksDB</code> — LSM-tree persistent storage</li>
+        <li><code>gRPC</code> / <code>Protobuf</code> — service definitions</li>
+        <li><code>golangci-lint</code> v2.10.1 — static analysis</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <h2 class="section-title">Benchmarks<span class="section-meta">TPS Journey</span></h2>
+    </div>
+    <div class="section-body">
+      <div class="category">
+        <div class="category-label category-label--mint">Dev Era (1.3K → 5.4K)</div>
+      </div>
+      <div class="bench-list">
+        <div class="bench-entry">
+          <span class="bench-label">Baseline</span>
+          <span class="bench-value">1.3K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#1 Gossip dedup — 28x fewer duplicates</span>
+          <span class="bench-value">2.4K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#2 Removed OptimisticExecution</span>
+          <span class="bench-value">4.3K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#3 committedCache — ref-livelock fix</span>
+          <span class="bench-value">4.7K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#4 Lock-free proposal build</span>
+          <span class="bench-value">5.4K</span>
+        </div>
+      </div>
+      <div class="category" style="margin-top: 32px;">
+        <div class="category-label category-label--cyan">Box Era (42K → 103K)</div>
+      </div>
+      <div class="bench-list">
+        <div class="bench-entry">
+          <span class="bench-label">Box baseline — HotStuff + RocksDB</span>
+          <span class="bench-value">42.3K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#2 Per-pair lane index overlays</span>
+          <span class="bench-value">47.9K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#4 Amortized sweep + prune-before-flush</span>
+          <span class="bench-value">48.4K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#6 Plan memo + %100 balance scan</span>
+          <span class="bench-value">52.1K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#8 Lock-free lane-overlay lookup</span>
+          <span class="bench-value">56.1K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#10 Plan memoization + u64 remaining</span>
+          <span class="bench-value">60.5K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#12 Lock-free verified-sig + alloc-free EIP-712</span>
+          <span class="bench-value">72.9K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#13 Stack-allocated stripe keys</span>
+          <span class="bench-value">75.3K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#21c Batch-verify cache — 61% process_ms removed</span>
+          <span class="bench-value">65.3K</span>
+        </div>
+        <div class="bench-entry">
+          <span class="bench-label">#21d LANE_PROF off + GOMEMLIMIT 32G</span>
+          <span class="bench-value">103.6K</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <h2 class="section-title">Block Timing<span class="section-meta">ms</span></h2>
+    </div>
+    <div class="bench-list">
+      <div class="bench-entry">
+        <span class="bench-label">process_ms (total)</span>
+        <span class="bench-value">174 mean<span class="bench-note">p50: 121 · p90: 384</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">place_ms</span>
+        <span class="bench-value">132 mean<span class="bench-note">p50: 93 · p90: 312</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">lane_ms</span>
+        <span class="bench-value">105 mean<span class="bench-note">p50: 74 · p90: 270</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">flush_ms</span>
+        <span class="bench-value">17 mean<span class="bench-note">p50: 9 · p90: 30</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">prune_ms</span>
+        <span class="bench-value">16 mean<span class="bench-note">p50: 2 · p90: 39</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">GC cycle</span>
+        <span class="bench-value">185 mean<span class="bench-note">p90: 295</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <h2 class="section-title">Per-Order Breakdown<span class="section-meta">µs/order</span></h2>
+    </div>
+    <div class="bench-list">
+      <div class="bench-entry">
+        <span class="bench-label">Matching — matfill, matgath, matsetup</span>
+        <span class="bench-value">5.11</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Merge pump — wait, lock, apply, rec</span>
+        <span class="bench-value">4.15</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Window marking — wincall, winmark</span>
+        <span class="bench-value">3.07</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Fill journaling — filljrn, filllegs, fillrem</span>
+        <span class="bench-value">2.59</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Book mutation — bidx, blevel, bside</span>
+        <span class="bench-value">2.19</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Persist — persist, perset, pernote</span>
+        <span class="bench-value">2.07</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Planning — planres, plantrd, planval</span>
+        <span class="bench-value">1.81</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Escrow — balance locking</span>
+        <span class="bench-value">1.68</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Total lane (clean)</span>
+        <span class="bench-value">~21</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">07</div>
+      <h2 class="section-title">Testing</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li>Unit tests — keeper matching, settlement accumulator, balance integrity</li>
+        <li>Consensus tests — Byzantine fault, crash recovery, WAL replay</li>
+        <li>Fuzz tests — differential fuzz vs serial, wire message parsing</li>
+        <li>Integration — localnet multi-validator, Solidity precompile calls</li>
+        <li>System tests — Foundry, JSON-RPC compatibility</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">08</div>
+      <h2 class="section-title">Security Audit</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li>Vote signatures verified on receipt</li>
+        <li>QC signatures verified against validator set</li>
+        <li>2/3+ voting power required (strict >2/3)</li>
+        <li>Vote equivocation detection + evidence</li>
+        <li>SafeNode predicate (locked QC check)</li>
+        <li>Reentrancy gate for Deposit/Withdraw (audit M2)</li>
+        <li>Parallel matching determinism (audit M1)</li>
+        <li>AppHash divergence detection</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">09</div>
+      <h2 class="section-title">Completed</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li>HotStuff consensus engine implementation</li>
+        <li>x/clob module with keeper + matching</li>
+        <li>CLOB precompile (limit, market, cancel, queries)</li>
+        <li>Trading mempool with batch state machine</li>
+        <li>Parallel per-pair matching (lane isolation)</li>
+        <li>WAL persistence + crash recovery</li>
+        <li>Localnet verified (in-memory benchmark passing)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">10</div>
+      <h2 class="section-title">In Progress<span class="section-meta">Awaiting 64-core re-measure</span></h2>
+    </div>
+    <div class="section-body">
+      <ul class="list list--pending">
+        <li>F5: Pointer-free order book — GC scanobject 52.7% → ~6%</li>
+        <li>F6: Index-permutation sort — sort_ms 14.5 → ~1ms</li>
+        <li>B2: Fused per-job stripe hold — pump wait+lock 2.6µs/order</li>
+        <li>F8/F9/F10: u128 balances, mempool lock + fairness</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">11</div>
+      <h2 class="section-title">Planned</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list list--planned">
+        <li>Production audit completion (audit008)</li>
+        <li>SIGTERM under load + restart recovery testing</li>
+        <li>Mainnet deployment</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <a href="/">← Back</a>
+    <span>evm-hft</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
