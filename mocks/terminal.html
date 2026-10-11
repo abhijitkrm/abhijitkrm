@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abhijitkrm@dev ~ $</title>
+    <meta name="description" content="Full Stack & Blockchain Engineer">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0d0d;
+            --green: #00ff00;
+            --green-dim: #00aa00;
+            --amber: #ffb000;
+            --cyan: #00ffff;
+            --white: #cccccc;
+            --comment: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--green);
+            line-height: 1.6;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .ascii-header {
+            color: var(--green);
+            white-space: pre;
+            font-size: 10px;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .prompt {
+            color: var(--green-dim);
+        }
+
+        .prompt::before {
+            content: "$ ";
+            color: var(--amber);
+        }
+
+        .command {
+            color: var(--white);
+        }
+
+        .output {
+            margin: 1rem 0 2rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid var(--comment);
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header {
+            color: var(--cyan);
+            margin-bottom: 1rem;
+        }
+
+        .section-header::before {
+            content: "# ";
+            color: var(--comment);
+        }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 180px 100px 1fr;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            align-items: start;
+        }
+
+        .project-name {
+            color: var(--amber);
+        }
+
+        .project-name a {
+            color: var(--amber);
+            text-decoration: none;
+        }
+
+        .project-name a:hover {
+            text-decoration: underline;
+        }
+
+        .project-lang {
+            color: var(--cyan);
+        }
+
+        .project-desc {
+            color: var(--white);
+        }
+
+        .links-row {
+            margin-top: 0.25rem;
+            padding-left: 180px;
+            color: var(--comment);
+        }
+
+        .links-row a {
+            color: var(--green-dim);
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+        .links-row a:hover {
+            color: var(--green);
+        }
+
+        .contact {
+            color: var(--white);
+        }
+
+        .contact a {
+            color: var(--green);
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .footer {
+            color: var(--comment);
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--comment);
+        }
+
+        @media (max-width: 700px) {
+            .project-row {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+            }
+
+            .links-row {
+                padding-left: 0;
+            }
+
+            .ascii-header {
+                font-size: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <pre class="ascii-header">
+   _   _     _     _ _ _ _   _  _
+  /_\ | |__ | |_  (_|_|_) |_| |/ /_ _ _ __ ___
+ //_\\| '_ \| ' \ | | | | __| ' /| '_| '_ ` _ \
+/  _  \ |_) | | | | | | | |_| . \| | | | | | | |
+\_/ \_/_.__/|_| |_|_|_|_|\__|_|\_\_| |_| |_| |_|
+
+Full Stack & Blockchain Engineer | 8+ years | Remote/Bengaluru
+        </pre>
+
+        <div class="section">
+            <p class="prompt"><span class="command">whoami</span></p>
+            <div class="output">
+                <p>8+ years building scalable systems, secure smart contracts,</p>
+                <p>and high-performance applications across blockchain and</p>
+                <p>trading systems. Focused on reliability, clarity, and</p>
+                <p>technology with real-world impact.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="prompt"><span class="command">ls -la ~/upcoming/</span></p>
+            <div class="output">
+                <div class="section-header">Upcoming Projects</div>
+                <div class="project-row">
+                    <span class="project-name"><a href="https://github.com/abhijitkrm/monadbft-go">monadbft</a></span>
+                    <span class="project-lang">[Go]</span>
+                    <span class="project-desc">MonadBFT port, pipelined BFT consensus for Cosmos-EVM</span>
+                </div>
+                <div class="project-row">
+                    <span class="project-name"><a href="https://github.com/abhijitkrm/oxide">oxide</a></span>
+                    <span class="project-lang">[Rust]</span>
+                    <span class="project-desc">Ultra-low-latency L1 stack for HFT</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="prompt"><span class="command">ls -la ~/projects/</span></p>
+            <div class="output">
+                <div class="section-header">Built</div>
+                <div class="project-row">
+                    <span class="project-name"><a href="https://github.com/abhijitkrm/sona">sona</a></span>
+                    <span class="project-lang">[HTML/CSS]</span>
+                    <span class="project-desc">Token-enforced design system</span>
+                </div>
+                <div class="project-row">
+                    <span class="project-name"><a href="https://github.com/abhijitkrm/cometcli">cometcli</a></span>
+                    <span class="project-lang">[Go]</span>
+                    <span class="project-desc">Agentic SRE terminal for Cosmos-EVM validators</span>
+                </div>
+                <div class="project-row">
+                    <span class="project-name"><a href="https://github.com/abhijitkrm/cometduty">cometduty</a></span>
+                    <span class="project-lang">[Go]</span>
+                    <span class="project-desc">Monitoring daemon for Cosmos-EVM validators</span>
+                </div>
+                <div class="project-row">
+                    <span class="project-name"><a href="https://github.com/abhijitkrm/faster">faster</a></span>
+                    <span class="project-lang">[Go/TS]</span>
+                    <span class="project-desc">Real-time EVM block explorer</span>
+                </div>
+                <div class="project-row">
+                    <span class="project-name">shrt</span>
+                    <span class="project-lang">[Multi]</span>
+                    <span class="project-desc">URL shortener ~150K RPS, custom AOF engine</span>
+                </div>
+                <div class="links-row">
+                    <a href="https://github.com/abhijitkrm/shrt-go">go</a>
+                    <a href="https://github.com/abhijitkrm/shrt-rust">rust</a>
+                    <a href="https://github.com/abhijitkrm/shrt-cpp">c++</a>
+                    <a href="https://github.com/abhijitkrm/shrt-java">java</a>
+                    <a href="https://github.com/abhijitkrm/shrt-ts">ts</a>
+                </div>
+                <div class="project-row">
+                    <span class="project-name">matcher</span>
+                    <span class="project-lang">[Multi]</span>
+                    <span class="project-desc">Zero-allocation order-matching engine</span>
+                </div>
+                <div class="links-row">
+                    <a href="https://github.com/abhijitkrm/matcher-cpp">c++ 23M</a>
+                    <a href="https://github.com/abhijitkrm/matcher-rust">rust 19M</a>
+                    <a href="https://github.com/abhijitkrm/matcher-java">java 11M</a>
+                    <a href="https://github.com/abhijitkrm/matcher-go">go 9M</a>
+                    <a href="https://github.com/abhijitkrm/matcher-ts">ts 5M</a>
+                </div>
+                <div class="project-row">
+                    <span class="project-name"><a href="https://github.com/abhijitkrm/findcmd">findcmd</a></span>
+                    <span class="project-lang">[Shell]</span>
+                    <span class="project-desc">Fast command-history search CLI</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="prompt"><span class="command">cat ~/.contact</span></p>
+            <div class="output contact">
+                <p>email: <a href="mailto:hi@abhijitkrm.com">hi@abhijitkrm.com</a></p>
+                <p>github: <a href="https://github.com/abhijitkrm">github.com/abhijitkrm</a></p>
+                <p>location: Remote / Bengaluru</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="prompt"><span class="command">echo $YEAR</span></p>
+            <p>2026<span class="blink">_</span></p>
+        </div>
+    </div>
+</body>
+</html>

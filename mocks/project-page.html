@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>monadbft-go - Abhijit</title>
+<meta name="description" content="Go implementation of Monad's pipelined two-phase BFT consensus for Cosmos-EVM.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:           #000000;
+  --ink:            #ffffff;
+  --ink-80:         #ffffffcc;
+  --ink-60:         #ffffff99;
+  --ink-50:         #ffffff80;
+  --ink-40:         #ffffff66;
+  --fill-10:        #ffffff1a;
+  --fill-5:         #ffffff0d;
+  --stroke-20:      #ffffff33;
+  --stroke-13:      #ffffff21;
+  --surface-1:      #181818;
+  --surface-2:      #1e1f20;
+  --mint:           #22e2a8;
+  --cyan:           #40b3ff;
+  --nebula-pink:    #f2a7b8;
+  --nebula-peach:   #f6d6c2;
+  --sans: "Space Grotesk", "The Future", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", "The Future Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --dur-med: 300ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--surface-1);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 40px;
+  background: var(--void);
+}
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--ink); }
+
+/* ---------- Nav ---------- */
+nav {
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--stroke-13);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-50);
+}
+.nav-inner a {
+  color: var(--ink-50);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.nav-inner a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+.nav-sep { color: var(--ink-40); }
+
+/* ---------- Header ---------- */
+header { margin-bottom: 40px; }
+.product-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+h1 {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.15;
+  margin-top: 10px;
+}
+.subtitle {
+  font-size: 18px;
+  color: var(--ink-60);
+  margin-top: 12px;
+  max-width: 600px;
+}
+.header-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-50);
+}
+.header-meta a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.header-meta a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+.status-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--void);
+  background: var(--mint);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* ---------- Section (Release-style) ---------- */
+.section {
+  margin-top: 36px;
+  break-inside: avoid;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--stroke-13);
+}
+.section-title {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.section-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-50);
+}
+
+/* ---------- Category ---------- */
+.category {
+  margin-top: 20px;
+}
+.category:first-child { margin-top: 16px; }
+.category-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-bottom: 10px;
+}
+.category-label--mint { color: var(--mint); }
+.category-label--cyan { color: var(--cyan); }
+.category-label--pink { color: var(--nebula-pink); }
+.category-label--peach { color: var(--nebula-peach); }
+
+/* ---------- List ---------- */
+.list {
+  list-style: none;
+}
+.list li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-80);
+  padding: 6px 0 6px 20px;
+  position: relative;
+}
+.list li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  font-family: var(--mono);
+  color: var(--mint);
+  font-weight: 500;
+}
+.list--pending li::before {
+  content: "○";
+  color: var(--ink-50);
+}
+.list--planned li::before {
+  content: "→";
+  color: var(--cyan);
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--fill-10);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--cyan);
+}
+
+/* ---------- Stats Row ---------- */
+.stats-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 20px 0;
+  border-top: 1px solid var(--stroke-13);
+  border-bottom: 1px solid var(--stroke-13);
+}
+.stat {
+  min-width: 100px;
+}
+.stat-value {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-top: 2px;
+}
+
+/* ---------- Benchmark Entry ---------- */
+.bench-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--stroke-13);
+  font-size: 14px;
+}
+.bench-entry:last-child { border-bottom: none; }
+.bench-label { color: var(--ink-80); }
+.bench-value {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mint);
+}
+.bench-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-40);
+  margin-left: 12px;
+}
+
+/* ---------- Code Block ---------- */
+.code-block {
+  background: var(--surface-2);
+  border: 1px solid var(--stroke-13);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 16px;
+  overflow-x: auto;
+}
+.code-block pre {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-80);
+  margin: 0;
+}
+.code-block .c { color: var(--ink-40); }
+.code-block .k { color: var(--cyan); }
+
+/* ---------- Footer ---------- */
+.foot {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--stroke-13);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--ink-40);
+}
+.foot a {
+  color: var(--ink-50);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.foot a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+@media (max-width: 600px) {
+  .page { padding: 32px 24px; }
+  h1 { font-size: 28px; }
+  .header-meta { flex-direction: column; gap: 8px; }
+  .stats-row { gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/">abhijit</a>
+      <span class="nav-sep">/</span>
+      <span>monadbft-go</span>
+    </div>
+  </nav>
+
+  <header>
+    <span class="product-name">Consensus · Go</span>
+    <h1>monadbft-go</h1>
+    <p class="subtitle">Go implementation of Monad's pipelined two-phase BFT consensus algorithm. Pluggable consensus engine for Cosmos-EVM (evmd).</p>
+    <div class="header-meta">
+      <span class="status-tag">In Progress</span>
+      <a href="https://github.com/abhijitkrm/monadbft-go">GitHub</a>
+      <a href="https://github.com/abhijitkrm/monadbft-go/blob/main/docs/integration.md">Docs</a>
+    </div>
+  </header>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Codebase</span>
+      <span class="section-meta">Port of ~70 Rust crates</span>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value">~60k</div>
+        <div class="stat-label">Lines of Go</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">27</div>
+        <div class="stat-label">Packages</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">5</div>
+        <div class="stat-label">Dependencies</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">2</div>
+        <div class="stat-label">Go Modules</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Architecture</span>
+    </div>
+    <div class="category">
+      <div class="category-label category-label--mint">Consensus Core</div>
+      <ul class="list">
+        <li><code>consensus/</code> — Pacemaker, VoteState, Safety rules, state machine</li>
+        <li><code>blocktree/</code> — Pending-block coherency, two-chain commit logic</li>
+        <li><code>validator/</code> — Stake-weighted ValidatorSet, epoch manager, leader election</li>
+        <li><code>crypto/</code> — secp256k1 + BLS12-381 with Monad signing domains</li>
+      </ul>
+    </div>
+    <div class="category">
+      <div class="category-label category-label--cyan">Networking</div>
+      <ul class="list">
+        <li><code>raptor/</code> — RFC 6330 RaptorQ codec (GF(256), LDPC+LT, systematic)</li>
+        <li><code>net/raptorcast/</code> — Chunk assignment, broadcast router, rebroadcast</li>
+        <li><code>net/dataplane/</code> — UDP batching, priority queues, TCP fallback</li>
+        <li><code>net/wireauth/</code> — Noise-based session authentication</li>
+      </ul>
+    </div>
+    <div class="category">
+      <div class="category-label category-label--peach">Persistence</div>
+      <ul class="list">
+        <li><code>wal/</code> — Append-only RLP event log, rotating chunks, crash recovery</li>
+        <li><code>store/</code> — Pebble-backed block store, forkpoint tracking, fsync</li>
+        <li><code>monadstate/</code> — Live/Sync mode dispatcher, safety watermarks</li>
+      </ul>
+    </div>
+    <div class="category">
+      <div class="category-label category-label--pink">Integration</div>
+      <ul class="list">
+        <li><code>bridge/</code> — ABCI adapter, FinalizeBlock/Commit translation</li>
+        <li><code>bridge/resultstore/</code> — Prunable tx indexes, RPC compatibility</li>
+        <li><code>glue/</code> — MonadEvent/Command contract types</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Dependencies</span>
+      <span class="section-meta">Minimal, audited libraries</span>
+    </div>
+    <div class="category">
+      <ul class="list">
+        <li><code>go-ethereum</code> — secp256k1 signing, RLP encoding, address derivation</li>
+        <li><code>supranational/blst</code> — BLS12-381 for vote/timeout aggregation</li>
+        <li><code>cockroachdb/pebble</code> — LSM block store with fsync guarantees</li>
+        <li><code>zeebo/blake3</code> — Fast hashing for block/tx digests</li>
+        <li><code>ericlagergren/aegis</code> — AEGIS-128L authenticated encryption</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Benchmarks</span>
+      <span class="section-meta">Apple M1 Pro, single process</span>
+    </div>
+    <div class="category">
+      <div class="bench-entry">
+        <span class="bench-label">Serial EVM execution (512-tx blocks, secp256k1)</span>
+        <span><span class="bench-value">~2,400 tx/s</span><span class="bench-date">2024-10</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Per-transaction latency</span>
+        <span><span class="bench-value">246 µs</span><span class="bench-date">2024-10</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Empty-block commits</span>
+        <span><span class="bench-value">~1,200 blk/s</span><span class="bench-date">2024-10</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Consensus commit overhead</span>
+        <span><span class="bench-value">~1 ms</span><span class="bench-date">2024-10</span></span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Worst-case round timeout (delta=400ms)</span>
+        <span><span class="bench-value">~1.9 s</span><span class="bench-date">2024-10</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Quick Start</span>
+    </div>
+    <div class="code-block">
+<pre><span class="c"># Clone repos side by side</span>
+<span class="k">git clone</span> https://github.com/abhijitkrm/monadbft-go.git
+<span class="k">git clone</span> https://github.com/abhijitkrm/monad-evm.git
+
+<span class="c"># Build and test</span>
+<span class="k">cd</span> monadbft-go
+<span class="k">go build</span> ./... && <span class="k">go test</span> ./...
+
+<span class="c"># Run single node</span>
+<span class="k">cd</span> ../monad-evm/evmd && <span class="k">go build</span> -o evmd .
+./evmd init mynode --chain-id monad-1
+./evmd start --engine=monadbft
+
+<span class="c"># Run 4-node devnet</span>
+<span class="k">cd</span> ../../monadbft-go/bridge
+<span class="k">go build</span> -o devnet ./cmd/devnet
+./devnet init-files -n 4 -o ./devnet-run -transport tcp
+./devnet soak -o ./devnet-run -duration 3m -rate 200</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Testing</span>
+      <span class="section-meta">Byte-identical with Rust for conformance</span>
+    </div>
+    <div class="category">
+      <ul class="list">
+        <li>8-node devnet transfers — inclusion, gas, nonce, apphash consistency</li>
+        <li>Multi-node restart matrices (TCP + RaptorCast transports)</li>
+        <li>Crash-window rejoin scenarios with WAL replay</li>
+        <li>CometBFT RPC parity verification</li>
+        <li>Swarm simulator for deterministic replay of Rust test vectors</li>
+        <li>TCP authentication integrity tests</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Completed</span>
+      <span class="section-meta">Track A + Track B</span>
+    </div>
+    <div class="category">
+      <div class="category-label category-label--mint">Track A — Consensus + Integration</div>
+      <ul class="list">
+        <li>Crypto primitives — secp256k1/BLS12-381 with Monad signing domains</li>
+        <li>Consensus core — Pacemaker, VoteState, two-chain commit safety</li>
+        <li>Swarm simulator — Deterministic replay, Rust test vector parity</li>
+        <li>Persistence — WAL rotating chunks, Pebble store, forkpoints</li>
+        <li>ABCI bridge — FinalizeBlock/Commit, mempool routing, epochs</li>
+        <li>TCP transport — Noise auth, DomainTCPAuth-signed transcripts</li>
+        <li>Production pass — Memory bounds, RPC indexing, metrics</li>
+      </ul>
+    </div>
+    <div class="category">
+      <div class="category-label category-label--cyan">Track B — Networking</div>
+      <ul class="list">
+        <li>RaptorQ codec — RFC 6330, GF(256) arithmetic, systematic index</li>
+        <li>RaptorCast router — Chunk assignment, rebroadcast windows</li>
+        <li>Dataplane — UDP batching, priority queues, TCP fallback</li>
+        <li>Peer discovery — Signed name records, bootstrap</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">In Progress</span>
+      <span class="section-meta">Track C — Hardening</span>
+    </div>
+    <div class="category">
+      <ul class="list list--pending">
+        <li>Validator rotation — <code>x/consensuskeys</code> registry for epoch-boundary churn</li>
+        <li>Evidence emission — Slashing hooks for Byzantine behavior</li>
+        <li>WebSocket subscriptions — CometBFT-compatible event streaming</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Planned</span>
+    </div>
+    <div class="category">
+      <ul class="list list--planned">
+        <li>Parallel EVM — BlockSTM-style execution targeting 10K TPS</li>
+        <li>Key-file tooling — <code>init</code> command for validator key generation</li>
+        <li>Backup tooling — Snapshot export/import for node recovery</li>
+        <li>IBC exploration — Cross-chain message compatibility</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <a href="/">← Back</a>
+    <span>monadbft-go</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

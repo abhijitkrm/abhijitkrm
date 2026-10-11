@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhijit Kumar - Full Stack & Blockchain Engineer</title>
+    <meta name="description" content="Full Stack & Blockchain Engineer with 8+ years building scalable systems, secure smart contracts, and high-performance applications.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-secondary: #111;
+            --text: #e5e5e5;
+            --text-muted: #888;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border: #222;
+            --card-bg: #0f0f0f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            margin-bottom: 4rem;
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-links a {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-links a:hover {
+            color: var(--text);
+        }
+
+        .bio {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 4rem;
+            line-height: 1.7;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .project {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project:first-of-type {
+            border-top: 1px solid var(--border);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .project-links a {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+        }
+
+        footer {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .name {
+                font-size: 2rem;
+            }
+
+            .contact-links {
+                gap: 1rem;
+            }
+
+            .project-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="name">Abhijit Kumar</h1>
+            <p class="title">Full Stack & Blockchain Engineer</p>
+            <div class="contact-links">
+                <a href="mailto:hi@abhijitkrm.com">hi@abhijitkrm.com</a>
+                <a href="https://github.com/abhijitkrm">github.com/abhijitkrm</a>
+                <span style="color: var(--text-muted);">Remote / Bengaluru</span>
+            </div>
+        </header>
+
+        <p class="bio">
+            8+ years building scalable systems, secure smart contracts, and high-performance applications across blockchain and trading systems. A disciplined, competitive builder focused on reliability, clarity, and technology with real-world impact.
+        </p>
+
+        <section>
+            <h2 class="section-title">Upcoming</h2>
+
+            <div class="project">
+                <div class="project-header">
+                    <a href="https://github.com/abhijitkrm/monadbft-go" class="project-name">monadbft</a>
+                    <div class="project-tags">
+                        <span class="tag">Consensus</span>
+                        <span class="tag">Go</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    Go port of MonadBFT, pipelined two-phase BFT consensus for Cosmos-EVM: consensus core, deterministic swarm, WAL persistence, ABCI bridge running 4-node evmd testnets.
+                </p>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <a href="https://github.com/abhijitkrm/oxide" class="project-name">oxide</a>
+                    <div class="project-tags">
+                        <span class="tag">L1 Stack</span>
+                        <span class="tag">Rust</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    An ultra-low-latency, high-throughput L1 stack built on Rust from ground up using first principles aiming for HFT.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Built</h2>
+
+            <div class="project">
+                <div class="project-header">
+                    <a href="https://github.com/abhijitkrm/sona" class="project-name">sona</a>
+                    <div class="project-tags">
+                        <span class="tag">Design System</span>
+                        <span class="tag">HTML/CSS</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    Token-enforced design system for landing pages and printable documents: canonical register, self-contained templates, drift-guard checker.
+                </p>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <a href="https://github.com/abhijitkrm/cometcli" class="project-name">cometcli</a>
+                    <div class="project-tags">
+                        <span class="tag">CLI</span>
+                        <span class="tag">Go</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    An agentic SRE terminal for Cosmos-EVM validators.
+                </p>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <a href="https://github.com/abhijitkrm/cometduty" class="project-name">cometduty</a>
+                    <div class="project-tags">
+                        <span class="tag">Daemon</span>
+                        <span class="tag">Go</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    Monitoring and alerting daemon for Cosmos-EVM validators: missed-block detection, jail/tombstone watch, EVM execution checks, Prometheus metrics and alerts.
+                </p>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <a href="https://github.com/abhijitkrm/faster" class="project-name">faster</a>
+                    <div class="project-tags">
+                        <span class="tag">Explorer</span>
+                        <span class="tag">Go/TS</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    A high-performance, real-time EVM block explorer.
+                </p>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <span class="project-name">shrt</span>
+                    <div class="project-tags">
+                        <span class="tag">Service</span>
+                        <span class="tag">Multi-lang</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    High-performance URL shortener: custom AOF storage engine, 256-shard index, SO_REUSEPORT multi-worker with ~150K RPS.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/abhijitkrm/shrt-go">Go</a>
+                    <a href="https://github.com/abhijitkrm/shrt-rust">Rust</a>
+                    <a href="https://github.com/abhijitkrm/shrt-cpp">C++20</a>
+                    <a href="https://github.com/abhijitkrm/shrt-java">Java 20</a>
+                    <a href="https://github.com/abhijitkrm/shrt-ts">TypeScript</a>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <span class="project-name">matcher</span>
+                    <div class="project-tags">
+                        <span class="tag">Engine</span>
+                        <span class="tag">Multi-lang</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    Deterministic, zero-allocation FIFO order-matching engine: same core, five languages, benchmarked per implementation.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/abhijitkrm/matcher-cpp">C++20 ~23M TPS</a>
+                    <a href="https://github.com/abhijitkrm/matcher-rust">Rust ~19M TPS</a>
+                    <a href="https://github.com/abhijitkrm/matcher-java">Java ~11M TPS</a>
+                    <a href="https://github.com/abhijitkrm/matcher-go">Go ~9M TPS</a>
+                    <a href="https://github.com/abhijitkrm/matcher-ts">TS ~5M TPS</a>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <a href="https://github.com/abhijitkrm/findcmd" class="project-name">findcmd</a>
+                    <div class="project-tags">
+                        <span class="tag">CLI</span>
+                        <span class="tag">Shell</span>
+                    </div>
+                </div>
+                <p class="project-description">
+                    CLI tool for fast command-history search: interactive mode, multi-term search, clipboard support.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Stack</h2>
+            <div class="skills">
+                <span class="skill">Go</span>
+                <span class="skill">Rust</span>
+                <span class="skill">TypeScript</span>
+                <span class="skill">C++</span>
+                <span class="skill">Java</span>
+                <span class="skill">Solidity</span>
+                <span class="skill">PostgreSQL</span>
+                <span class="skill">Redis</span>
+                <span class="skill">Cosmos SDK</span>
+                <span class="skill">EVM</span>
+                <span class="skill">Docker</span>
+                <span class="skill">Kubernetes</span>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Abhijit Kumar</p>
+        </footer>
+    </div>
+</body>
+</html>

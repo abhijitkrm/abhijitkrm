@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>oxide - Abhijit</title>
+<meta name="description" content="Pre-alpha Layer 1 blockchain written in Rust, engineered for high-frequency on-chain trading.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:           #000000;
+  --ink:            #ffffff;
+  --ink-80:         #ffffffcc;
+  --ink-60:         #ffffff99;
+  --ink-50:         #ffffff80;
+  --ink-40:         #ffffff66;
+  --fill-10:        #ffffff1a;
+  --fill-5:         #ffffff0d;
+  --stroke-20:      #ffffff33;
+  --stroke-13:      #ffffff21;
+  --surface-1:      #181818;
+  --surface-2:      #1e1f20;
+  --mint:           #22e2a8;
+  --cyan:           #40b3ff;
+  --nebula-pink:    #f2a7b8;
+  --nebula-peach:   #f6d6c2;
+  --radius-sm:      10px;
+  --radius-pill:    999px;
+  --sans: "Space Grotesk", "The Future", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", "The Future Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --dur-med: 300ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--void);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--ink); }
+
+.page { max-width: 1440px; margin: 0 auto; padding: 0 100px; }
+
+/* ---------- Hero (Full Width) ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 100px calc(50vw - 50%) 80px;
+  margin-inline: calc(50% - 50vw);
+}
+.starfield {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(#ffffffcc 1.2px, transparent 1.6px),
+    radial-gradient(#ffffff66 1px, transparent 1.4px);
+  background-size: 120px 120px, 40px 40px;
+  background-position: 0 0, 0 0;
+  opacity: 0.7;
+  mask-image: linear-gradient(to bottom, black 40%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 92%);
+}
+.hero-inner {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 100px;
+}
+
+/* ---------- Nav ---------- */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-50);
+  margin-bottom: 32px;
+}
+.nav-inner a {
+  color: var(--ink-50);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.nav-inner a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+.nav-sep { color: var(--ink-40); }
+
+/* ---------- Header ---------- */
+.product-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+.hero h1 {
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-top: 12px;
+}
+.subtitle {
+  font-size: 20px;
+  color: var(--ink-60);
+  margin-top: 16px;
+  max-width: 700px;
+  line-height: 1.5;
+}
+.header-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-50);
+}
+.header-meta a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.header-meta a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+.status-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--void);
+  background: var(--mint);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+/* ---------- Stats Strip ---------- */
+.stats {
+  display: flex;
+  gap: 56px;
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--stroke-13);
+}
+.stat-value {
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-top: 4px;
+}
+
+/* ---------- Sections ---------- */
+section { padding: 64px 0 0; }
+.section-head {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--stroke-13);
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.section-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-50);
+  margin-left: 12px;
+}
+.section-body {
+  margin-top: 0;
+}
+.section-body p {
+  font-size: 16px;
+  color: var(--ink-80);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.section-body p:last-child { margin-bottom: 0; }
+
+/* ---------- Category ---------- */
+.category {
+  margin-top: 24px;
+}
+.category:first-child { margin-top: 0; }
+.category-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-bottom: 12px;
+}
+.category-label--mint { color: var(--mint); }
+.category-label--cyan { color: var(--cyan); }
+.category-label--pink { color: var(--nebula-pink); }
+.category-label--peach { color: var(--nebula-peach); }
+
+/* ---------- List ---------- */
+.list {
+  list-style: none;
+}
+.list li {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-80);
+  padding: 8px 0 8px 24px;
+  position: relative;
+}
+.list li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  font-family: var(--mono);
+  color: var(--mint);
+  font-weight: 500;
+}
+.list--pending li::before {
+  content: "○";
+  color: var(--ink-50);
+}
+.list--planned li::before {
+  content: "→";
+  color: var(--cyan);
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--fill-10);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--cyan);
+}
+
+/* ---------- Benchmark Entry ---------- */
+.bench-list {
+  margin-top: 0;
+}
+.bench-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--stroke-13);
+  font-size: 15px;
+}
+.bench-entry:last-child { border-bottom: none; }
+.bench-label { color: var(--ink-80); }
+.bench-value {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--mint);
+}
+.bench-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-40);
+  margin-left: 12px;
+}
+
+/* ---------- Code Block ---------- */
+.code-block {
+  background: var(--surface-2);
+  border: 1px solid var(--stroke-13);
+  border-radius: var(--radius-sm);
+  padding: 24px 28px;
+  margin-top: 0;
+  overflow-x: auto;
+}
+.code-block pre {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-80);
+  margin: 0;
+}
+.code-block .c { color: var(--ink-40); }
+.code-block .k { color: var(--cyan); }
+
+/* ---------- Footer ---------- */
+.foot {
+  margin-top: 80px;
+  padding: 28px 0;
+  border-top: 1px solid var(--stroke-13);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-40);
+}
+.foot a {
+  color: var(--ink-50);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--stroke-20);
+}
+.foot a:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .page { padding: 0 40px; }
+  .hero-inner { padding: 0 40px; }
+  .hero { padding: 80px calc(50vw - 50%) 60px; }
+  .hero h1 { font-size: 42px; }
+  .stats { flex-wrap: wrap; gap: 40px; }
+}
+@media (max-width: 600px) {
+  .page { padding: 0 24px; }
+  .hero-inner { padding: 0 24px; }
+  .hero h1 { font-size: 32px; }
+  .subtitle { font-size: 16px; }
+  .header-meta { flex-direction: column; gap: 12px; }
+  .stats { gap: 24px; }
+  .stat-value { font-size: 24px; }
+  .bench-entry { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="starfield"></div>
+  <div class="hero-inner">
+    <div class="nav-inner">
+      <a href="/">abhijit</a>
+      <span class="nav-sep">/</span>
+      <span>oxide</span>
+    </div>
+    <span class="product-name">L1 Stack · Rust</span>
+    <h1>oxide</h1>
+    <p class="subtitle">Pre-alpha Layer 1 blockchain written in Rust, engineered for high-frequency on-chain trading. Combines native matching engine with EVM-compatible execution.</p>
+    <div class="header-meta">
+      <span class="status-tag">In Progress (pre-alpha)</span>
+      <a href="https://github.com/abhijitkrm/oxide">GitHub</a>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">~50k</div>
+        <div class="stat-label">Lines of Code (est.)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">20+</div>
+        <div class="stat-label">Crates</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">Phase 4</div>
+        <div class="stat-label">Hardening</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">2,048</div>
+        <div class="stat-label">Tests</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <h2 class="section-title">Features</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li>Native CLOB supporting spot and perpetual markets</li>
+        <li>Matching engine ≥5M ops/sec single-core</li>
+        <li>Sub-200 nanosecond per-order latency</li>
+        <li>oxideBFT pipelined 2-chain HotStuff consensus</li>
+        <li>50-100ms block cadence, 150-250ms finality</li>
+        <li>1-5 gigagas/second sustained EVM throughput</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <h2 class="section-title">Architecture</h2>
+    </div>
+    <div class="section-body">
+      <div class="category">
+        <div class="category-label category-label--mint">Consensus</div>
+        <ul class="list">
+          <li>oxideBFT — pipelined 2-chain HotStuff consensus</li>
+          <li>MockEngine — testing and simulation harness</li>
+          <li>SequencerEngine — transaction ordering and batching</li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-label category-label--cyan">Storage</div>
+        <ul class="list">
+          <li>Authenticated journal (MMR-over-log)</li>
+          <li><code>redb</code> — embedded key-value store</li>
+          <li><code>RocksDB</code> — LSM-tree persistent storage</li>
+          <li><code>MDBX</code> — memory-mapped database</li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-label category-label--peach">Execution</div>
+        <ul class="list">
+          <li><code>revm</code> — fast EVM implementation</li>
+          <li>Parallel Block-STM concurrency for transaction execution</li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-label category-label--pink">Trading</div>
+        <ul class="list">
+          <li>Flat tick ladder order book structure</li>
+          <li>Native CLOB (Central Limit Order Book)</li>
+          <li>Exchange settlement engine</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <h2 class="section-title">Dependencies<span class="section-meta">Core libraries</span></h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li><code>BLAKE3</code> — fast cryptographic hashing</li>
+        <li><code>BLS12-381</code> — threshold signatures for consensus</li>
+        <li><code>ed25519</code> — signing for transactions and identities</li>
+        <li><code>revm</code> — EVM execution engine</li>
+        <li><code>MDBX</code> / <code>RocksDB</code> — persistent storage backends</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <h2 class="section-title">Benchmarks</h2>
+    </div>
+    <div class="bench-list">
+      <div class="bench-entry">
+        <span class="bench-label">Matching engine (1 market)</span>
+        <span class="bench-value">24.5M orders/s</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Matching engine (128 markets)</span>
+        <span class="bench-value">11.68M orders/s</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Real EVM transfers</span>
+        <span class="bench-value">~2.5 GG/s</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Exchange settlement</span>
+        <span class="bench-value">538k orders/s</span>
+      </div>
+      <div class="bench-entry">
+        <span class="bench-label">Trading load (4 validators)</span>
+        <span class="bench-value">72,556 tx/s</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <h2 class="section-title">Testing</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li>11 fuzz targets with committed corpus</li>
+        <li>10k chaos simulation scenarios</li>
+        <li>TLA+ formal model of oxideBFT</li>
+        <li>2,048 passing tests</li>
+        <li>HFT audit completed</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <h2 class="section-title">Completed<span class="section-meta">Phases 0-3</span></h2>
+    </div>
+    <div class="section-body">
+      <ul class="list">
+        <li>Phase 0 — Foundation: core infrastructure and primitives</li>
+        <li>Phase 1 — Consensus: oxideBFT implementation</li>
+        <li>Phase 2 — EVM: revm integration and execution</li>
+        <li>Phase 3 — Trading core: CLOB and matching engine</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">07</div>
+      <h2 class="section-title">In Progress<span class="section-meta">Phase 4</span></h2>
+    </div>
+    <div class="section-body">
+      <ul class="list list--pending">
+        <li>Hardening — stability and edge case handling</li>
+        <li>Testnet preparation — deployment infrastructure</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="section-num">08</div>
+      <h2 class="section-title">Planned</h2>
+    </div>
+    <div class="section-body">
+      <ul class="list list--planned">
+        <li>External security audit</li>
+        <li>Testnet launch</li>
+        <li>SVM (Solana VM) support</li>
+        <li>MoveVM support</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <a href="/">← Back</a>
+    <span>oxide</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
