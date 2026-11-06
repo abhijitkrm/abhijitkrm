@@ -40,5 +40,5 @@ Deterministic, zero-allocation FIFO order-matching engine: same core, five langu
 CLI tool for fast command-history search: interactive mode, multi-term search, clipboard support.
 
 **[orderer](https://github.com/abhijitkrm/orderer)** `Order System · Multi`
-High-performance order management system with lock-free concurrency, SIMD-accelerated matching, and sub-microsecond latency.
-[Go](https://github.com/abhijitkrm/orderer-go) · [C++](https://github.com/abhijitkrm/orderer-cpp)
+LMAX-disruptor multi-core order-matching pipeline with CRC-sealed journals, crash recovery and Raft-style replicated failover (kill -9-tested). Five languages, byte-identical output, and replicas of different languages share one cluster; ~17-19M replicated commands/s in Rust, C++ and Go.
+[Rust (~33M/s)](https://github.com/abhijitkrm/orderer-rust) · [C++20 (~28M/s)](https://github.com/abhijitkrm/orderer-cpp) · [Java (~20M/s)](https://github.com/abhijitkrm/orderer-java) · [Go (~19M/s)](https://github.com/abhijitkrm/orderer-go) · [TypeScript (~8M/s)](https://github.com/abhijitkrm/orderer-ts)
