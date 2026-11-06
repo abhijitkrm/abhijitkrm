@@ -368,10 +368,10 @@ code {
     </div>
     <span class="product-name">Engine · Multi</span>
     <h1>matcher</h1>
-    <p class="subtitle">High-performance FIFO limit order book and matching engine processing up to ~9M orders/sec. Single-writer architecture with zero external dependencies.</p>
+    <p class="subtitle">High-performance FIFO limit order book and matching engine processing up to ~115M orders/sec per core. Single-writer architecture with zero external dependencies.</p>
     <div class="header-meta">
       <span class="status-tag">Complete</span>
-      <a href="https://github.com/abhijitkrm/matcher-go">GitHub (main implementation)</a>
+      <a href="https://github.com/abhijitkrm/matcher">GitHub</a>
     </div>
     <div class="stats">
       <div class="stat">
@@ -379,8 +379,8 @@ code {
         <div class="stat-label">Languages</div>
       </div>
       <div class="stat">
-        <div class="stat-value">~9M</div>
-        <div class="stat-label">Orders/s</div>
+        <div class="stat-value">~115M</div>
+        <div class="stat-label">Orders/s/core</div>
       </div>
       <div class="stat">
         <div class="stat-value">Zero</div>
@@ -434,28 +434,28 @@ code {
   <section>
     <div class="section-head">
       <div class="section-num">03</div>
-      <h2 class="section-title">Implementations<span class="section-meta">5 Languages, Same Semantics</span></h2>
+      <h2 class="section-title">Implementations<span class="section-meta">5 languages, same semantics, orders/sec on one core</span></h2>
     </div>
     <div class="bench-list">
       <div class="bench-entry">
-        <span class="bench-label">C++20</span>
-        <span class="bench-value">~23M TPS</span>
+        <span class="bench-label">Rust</span>
+        <span class="bench-value">~115M/s</span>
       </div>
       <div class="bench-entry">
-        <span class="bench-label">Rust</span>
-        <span class="bench-value">~19M TPS</span>
+        <span class="bench-label">C++20</span>
+        <span class="bench-value">~105M/s</span>
       </div>
       <div class="bench-entry">
         <span class="bench-label">Java</span>
-        <span class="bench-value">~11M TPS</span>
+        <span class="bench-value">~69M/s</span>
       </div>
       <div class="bench-entry">
         <span class="bench-label">Go</span>
-        <span class="bench-value">~9M TPS</span>
+        <span class="bench-value">~68M/s</span>
       </div>
       <div class="bench-entry">
         <span class="bench-label">TypeScript</span>
-        <span class="bench-value">~5M TPS</span>
+        <span class="bench-value">~34M/s</span>
       </div>
     </div>
   </section>
@@ -472,6 +472,7 @@ code {
           <li>43 golden vector test cases</li>
           <li>Cross-implementation byte-identical verification</li>
           <li>Custom benchmark harness with deterministic workload generator</li>
+          <li>Figures: Apple M1, no-op sink, cache-resident 1k-order book; Rust and C++ do ~46M and ~44M on a mixed ~100k-order workload, and throughput falls with book depth</li>
         </ul>
       </div>
     </div>

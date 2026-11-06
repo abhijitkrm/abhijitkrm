@@ -33,8 +33,8 @@ High-performance URL shortener: custom AOF storage engine, 256-shard index, SO_R
 [Go](https://github.com/abhijitkrm/shrt-go) · [Rust](https://github.com/abhijitkrm/shrt-rust) · [C++20](https://github.com/abhijitkrm/shrt-cpp) · [Java 20](https://github.com/abhijitkrm/shrt-java) · [TypeScript](https://github.com/abhijitkrm/shrt-ts)
 
 **[matcher](https://github.com/abhijitkrm/matcher)** `Engine · Multi`
-Deterministic, zero-allocation FIFO order-matching engine: same core, five languages, benchmarked per implementation.
-[C++20 (~23M TPS)](https://github.com/abhijitkrm/matcher-cpp) · [Rust (~19M TPS)](https://github.com/abhijitkrm/matcher-rust) · [Java (~11M TPS)](https://github.com/abhijitkrm/matcher-java) · [Go (~9M TPS)](https://github.com/abhijitkrm/matcher-go) · [TypeScript (~5M TPS)](https://github.com/abhijitkrm/matcher-ts)
+Deterministic, zero-allocation FIFO order-matching engine: same core, five languages, byte-identical output, benchmarked per implementation (orders/sec on one core, cache-resident book; ~44-46M on a mixed 100k-order workload in Rust and C++).
+[Rust (~115M/s)](https://github.com/abhijitkrm/matcher-rust) · [C++20 (~105M/s)](https://github.com/abhijitkrm/matcher-cpp) · [Java (~69M/s)](https://github.com/abhijitkrm/matcher-java) · [Go (~68M/s)](https://github.com/abhijitkrm/matcher-go) · [TypeScript (~34M/s)](https://github.com/abhijitkrm/matcher-ts)
 
 **[findcmd](https://github.com/abhijitkrm/findcmd)** `CLI · Shell`
 CLI tool for fast command-history search: interactive mode, multi-term search, clipboard support.
